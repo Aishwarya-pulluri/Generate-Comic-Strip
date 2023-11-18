@@ -13,8 +13,6 @@ document.getElementById('comicForm').addEventListener('submit', function(event) 
     const panel8 = document.getElementsByName('panel8')[0].value;
     const panel9 = document.getElementsByName('panel9')[0].value;
     const panel10 = document.getElementsByName('panel10')[0].value;
-
-    // Repeat for panels 3 to 10
     
     // Create an array of panel inputs
     const panels = [panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9, panel10];
