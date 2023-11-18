@@ -1,31 +1,89 @@
-const form = document.getElementById('comicForm');
-const comicStrip = document.getElementById('comicStrip');
+// Function to handle form submission
+document.getElementById('comicForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+    
+    // Get input values for each panel
+    const panel1 = document.getElementsByName('panel1')[0].value;
+    const panel2 = document.getElementsByName('panel2')[0].value;
+    const panel3 = document.getElementsByName('panel3')[0].value;
+    const panel4 = document.getElementsByName('panel4')[0].value;
+    const panel5 = document.getElementsByName('panel5')[0].value;
+    const panel6 = document.getElementsByName('panel6')[0].value;
+    const panel7 = document.getElementsByName('panel7')[0].value;
+    const panel8 = document.getElementsByName('panel8')[0].value;
+    const panel9 = document.getElementsByName('panel9')[0].value;
+    const panel10 = document.getElementsByName('panel10')[0].value;
 
-form.addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const panels = document.querySelectorAll('input');
-    const textArray = Array.from(panels).map(panel => panel.value);
-
-    // Make API call for each panel
-    textArray.forEach((text, index) => {
-        fetch('https://text-to-image7.p.rapidapi.com/?prompt=${encodeURIComponent(text)}&batch_size=1&negative_prompt=ugly%2C%20duplicate%2C%20morbid%2C%20mutilated%2C%20%5Bout%20of%20frame%5D%2C%20extra%20fingers%2C%20mutated%20hands%2C%20poorly%20drawn%20hands%2C%20poorly%20drawn%20face%2C%20mutation%2C%20deformed%2C%20blurry%2C%20bad%20anatomy%2C%20bad%20proportions', {
-            method: 'GET',
-            headers: {
-                'X-RapidAPI-Key': '4385ea6a9bmsh5353e790d7737f7p157887jsn75ce4d2f004f',
-                'X-RapidAPI-Host': 'text-to-image7.p.rapidapi.com'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Display the generated image in the respective panel
-            const image = document.createElement('img');
-            image.src = data.image_url;
-            comicStrip.appendChild(image);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // Handle error and display appropriate feedback to the user
-        });
-    });
+    // Repeat for panels 3 to 10
+    
+    // Create an array of panel inputs
+    const panels = [panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9, panel10];
+    
+    // Call the API to generate the comic strip
+    generateComic(panels);
 });
+
+// Function to call the API and generate the comic strip
+function generateComic(panels) {
+    const data = {
+        inputs: panels.join('\n') // Join panel inputs with line breaks
+    };
+    
+    fetch('https://xdwvg9no7pefghrn.us-east-1.aws.endpoints.huggingface.cloud', {
+        headers: {
+            'Accept': 'image/png',
+            'Authorization': 'Bearer VknySbLLTUjbxXAXCjyfaFIPwUTCeRXbFSOjwRiCxsxFyhbnGjSFalPKrpvvDAaPVzWEevPljilLVDBiTzfIbWFdxOkYJxnOPoHhkkVGzAknaOulWggusSFewzpqsNWM',
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.blob();
+        } else {
+            throw new Error('Failed to generate comic strip');
+        }
+    })
+    .then(result => {
+        // Display the generated comic panels
+        displayComic(result);
+    })
+    .catch(error => {
+        // Handle errors and display error message
+        console.error(error);
+        displayError('An error occurred. Please try again later.');
+    });
+}
+
+// Function to display the generated comic panels
+function displayComic(imageBlob) {
+    const comicDisplay = document.getElementById('comicDisplay');
+    
+    // Create a new panel element for each generated image
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    
+    // Create an image element and set the source to the generated image
+    const image = document.createElement('img');
+    image.src = URL.createObjectURL(imageBlob);
+    
+    // Append the image to the panel and the panel to the comic display
+    panel.appendChild(image);
+    comicDisplay.appendChild(panel);
+}
+
+// Function to display error messages
+function displayError(message) {
+    const comicDisplay = document.getElementById('comicDisplay');
+    
+    // Create a new panel element for the error message
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    
+    // Set the error message as the panel content
+    panel.textContent = message;
+    
+    // Append the panel to the comic display
+    comicDisplay.appendChild(panel);
+}

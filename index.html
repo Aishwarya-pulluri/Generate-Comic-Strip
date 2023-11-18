@@ -6,41 +6,29 @@
 </head>
 <body>
     <h1>Comic Strip Generator</h1>
+    
     <form id="comicForm">
-        <label for="panel1">Panel 1:</label>
-        <input required type="text" id="panel1" name="panel1"><br>
+        <!-- Input fields for each panel -->
+        <input required type="text" name="panel1" placeholder="Panel 1">
+        <input required type="text" name="panel2" placeholder="Panel 2">
+        <input required type="text" name="panel3" placeholder="Panel 3">
+        <input required type="text" name="panel4" placeholder="Panel 4">
+        <input required type="text" name="panel5" placeholder="Panel 5">
+        <input required type="text" name="panel6" placeholder="Panel 6">
+        <input required type="text" name="panel7" placeholder="Panel 7">
+        <input required type="text" name="panel8" placeholder="Panel 8">
+        <input required type="text" name="panel9" placeholder="Panel 9">
+        <input required type="text" name="panel10" placeholder="Panel 10">
 
-        <label for="panel2">Panel 2:</label>
-        <input required type="text" id="panel2" name="panel2"><br>
-
-        <label for="panel3">Panel 3:</label>
-        <input required type="text" id="panel3" name="panel3"><br>
-
-        <label for="panel4">Panel 4:</label>
-        <input required type="text" id="panel4" name="panel4"><br>
-
-        <label for="panel5">Panel 5:</label>
-        <input required type="text" id="panel5" name="panel5"><br>
-
-        <label for="panel6">Panel 6:</label>
-        <input required type="text" id="panel6" name="panel6"><br>
-
-        <label for="panel7">Panel 7:</label>
-        <input required type="text" id="panel7" name="panel7"><br>
-
-        <label for="panel8">Panel 8:</label>
-        <input required type="text" id="panel8" name="panel8"><br>
-
-        <label for="panel9">Panel 9:</label>
-        <input required type="text" id="panel9" name="panel9"><br>
-
-        <label for="panel10">Panel 10:</label>
-        <input required type="text" id="panel10" name="panel10"><br>
-
-        <button type="submit">Generate Comic Strip</button>
+        <!-- Repeat for panels 3 to 10 -->
+        
+        <button type="submit">Generate Comic</button>
     </form>
-    <div id="comicStrip"></div>
-
+    
+    <div id="comicDisplay">
+        <!-- Generated comic panels will be displayed here -->
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
